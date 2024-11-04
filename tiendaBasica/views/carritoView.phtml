@@ -1,0 +1,41 @@
+<html>
+    <h1>Esta es la página del carrito</h1>
+
+    <?php
+        $user = $_SESSION['user'];
+        $productos = tiendaRepository::getCarro($user->getId());
+        $totalPedido = tiendaRepository::getPrecioTotal($user->getId());
+        
+        foreach ($productos as $producto) {
+            echo "Precio: " . $producto['precio'] . "€" .
+                 ", Cantidad: " . $producto['cantidad'] . 
+                 " El precio total seria: " . $totalPedido . "<br>";
+        
+            // Formulario para Confirmar Compra
+            echo "<form method='POST' style='margin-top: 10px;'>";
+            echo "<input type='hidden' name='product_id' value='" . $producto['id_producto'] . "' />";
+            echo "<button type='submit' name='confirmarCompra' style='padding: 10px 20px; 
+                 background-color: #007bff; color: #fff; border: none; cursor: pointer;'>";
+            echo "Confirmar Compra";
+            echo "</button>";
+            echo "</form>";
+        }        
+        
+        // Procesar la compra al hacer clic en Confirmar Compra
+        if (isset($_POST['confirmarCompra'])) {
+            $fecha = Date("Y-m-d H:i:s");
+            $precioTotal = tiendaRepository::getPrecioTotal($user->getId());
+            $result = tiendaRepository::procesarCompra($user->getId(), $fecha, $precioTotal); // Asegúrate de que procesarCompra acepte el ID del producto
+        
+            if ($result) {
+                echo "<p>Compra confirmada. Gracias por su compra.</p>";
+            } else {
+                echo "<p>Error al procesar la compra. Intente nuevamente.</p>";
+            }
+        }
+
+        echo "<a href='index.php?c=tienda&mainView=1'>Volver a la pagina principal</a>";
+    ?>
+
+   
+</html>

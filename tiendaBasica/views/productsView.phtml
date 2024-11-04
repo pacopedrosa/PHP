@@ -1,0 +1,21 @@
+<html>
+    <h1>Esta es la pagina de la gestion de productos</h1>
+
+
+    <ul>
+        <?php
+
+            echo "<h3>Lista de productos</h3>" . "<br>";
+            echo "<a href='index.php?c=tienda&add=1'>Añadir producto</a>"."<br>"."<br>";
+            $productos = Product::getAllProducts();
+            foreach ($productos as $product){
+                echo "Nombre: ".$product->getNombre(). 
+                "<a href='index.php?c=tienda&deleteProduct=1&idProduct=".$product->getId()."'> X</a>".
+                "<a href='index.php?c=tienda&editProduct=1&idProduct=".$product->getId()."'> ✔</a>" . "<br>";
+            }
+       ?>
+    </ul>
+    
+
+    <p>Puedes visitar la <a href="index.php?c=tienda&mainView=1">página principal</a> para volver.</p>
+</html>

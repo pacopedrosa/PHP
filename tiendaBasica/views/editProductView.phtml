@@ -1,0 +1,15 @@
+<html>
+    <?php
+            $idProduct = $_GET['idProduct'];
+    echo"  
+        <form method='post' action='index.php?c=tienda&idProduct=$idProduct' enctype='multipart/form-data'>
+            <input type='text' name='nombreProduct' placeholder='Nombre del producto'>
+            <input type='text' name='descripcionProduct' placeholder='Descripcion del producto'>
+            <input type='file' name='imagenProduct' placeholder='Imagen del producto'>
+            <input type='number' name='precioProduct' placeholder='Precio del producto'>
+            <input type='number' name='cantidadProduct' placeholder='Cantidad del producto'>
+            <input type='submit' name='actualizar' value='Actualizar'>
+        </form>
+        ";
+        ?>
+</html>

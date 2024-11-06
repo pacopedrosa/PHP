@@ -104,6 +104,28 @@ class tiendaRepository {
         return $db->affected_rows;  // Devuelve el número de filas afectadas
     }
 
+
+    public static function getVecesComprado($id_producto, $id_user) {
+        $db = Connection::connect();
+    
+        $q = "SELECT u.username, p.nombre AS producto, COUNT(l.id_linea) AS veces_comprado 
+              FROM linea l
+              JOIN users u ON l.id_user = u.id_user 
+              JOIN productos p ON l.id_producto = p.id_producto 
+              WHERE l.visible = 0 AND l.id_producto = '$id_producto' AND l.id_user = '$id_user'
+              GROUP BY u.id_user, l.id_producto 
+              ORDER BY veces_comprado DESC";
+    
+        $result = $db->query($q);
+    
+        if ($result && $result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        
+        return " 0 veces";  
+    }
+    
+
     
     
 }

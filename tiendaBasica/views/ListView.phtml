@@ -8,80 +8,78 @@
 
     <?php
     if(isset($_SESSION['user'])){
-      echo" <a href='index.php?c=tienda&carro=1'>Ver carrito</a><br><br><br><br>";
+        echo" <a href='index.php?c=tienda&carro=1'>Ver carrito</a><br><br><br><br>";
     }
-        if(isset($_SESSION['user'])){
-            $user = $_SESSION['user'];
-            if($user->getRole() == 1){
-                echo "<a href='index.php?c=admin&adminView=1'>Ir a pagina de admin</a>";
-            }
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+        if($user->getRole() == 1){
+            echo "<a href='index.php?c=admin&adminView=1'>Ir a pagina de admin</a>";
         }
+    }
     ?>
-<?php
-if (isset($_GET['view'])) {
-    $productos = Product::getAllProducts();
-    foreach ($productos as $p) {
-        $message ="";
 
-        // Verificar si el usuario está logueado
-        if (isset($_SESSION['user'])) {
-            $user = $_SESSION['user'];
-            $result = tiendaRepository::getVecesComprado($p->getId(), $user->getId());
-        } else {
-            $user = null;
-            $result = null; // No mostrar resultados de compras si el usuario no está logueado
-        }
+    <?php
+    if (isset($_GET['view'])) {
+        $productos = Product::getAllProducts();
+        foreach ($productos as $p) {
+            $message = "";
 
-        echo "<div class='producto' style='border: 1px solid #ddd; padding: 20px; margin: 10px 0;'>";
-        echo "<h2 style='font-size: 24px; color: #333;'>" . $p->getNombre() . "</h2>";
-        echo "<p><strong>Descripción:</strong> " . $p->getDescripcion() . "</p>";
-        echo "<p><strong>Precio:</strong> $" . $p->getPrecio() . "</p>";
-        echo "<p><strong>Cantidad disponible:</strong> " . $p->getCantidad() . "</p>";
-        echo "<img src='./public/img/" . $p->getImagen() . "' alt='" . $p->getNombre() . "' style='max-width: 200px; height: auto;' /><br>";
-
-        
-
-        // Mostrar formulario si el usuario está logueado
-        if ($user) {
-            if ($user && $result) {
-                $message = "El producto ha sido comprado " . $result['veces_comprado'] . " veces por " . $result['username'];
-                echo $message;
+            // Verificar si el usuario está logueado
+            if (isset($_SESSION['user'])) {
+                $user = $_SESSION['user'];
+                $result = tiendaRepository::getVecesComprado($p->getId(), $user->getId());
             } else {
-                $message = "Este producto no ha sido comprado aún.";
+                $user = null;
+                $result = null; // No mostrar resultados de compras si el usuario no está logueado
+            }
+
+            echo "<div class='producto' style='border: 1px solid #ddd; padding: 20px; margin: 10px 0;'>";
+            echo "<h2 style='font-size: 24px; color: #333;'>" . $p->getNombre() . "</h2>";
+            echo "<p><strong>Descripción:</strong> " . $p->getDescripcion() . "</p>";
+            echo "<p><strong>Precio:</strong> $" . $p->getPrecio() . "</p>";
+            echo "<p><strong>Cantidad disponible:</strong> " . $p->getCantidad() . "</p>";
+            echo "<img src='./public/img/" . $p->getImagen() . "' alt='" . $p->getNombre() . "' style='max-width: 200px; height: auto;' /><br>";
+
+            // Mostrar formulario si el usuario está logueado
+            if ($user) {
+                if (isset($result) && is_array($result)) {
+                    $message = "El producto ha sido comprado " . $result['veces_comprado'] . " veces por " . $result['username'];
+                    echo $message;
+                } else {
+                    $message = "Este producto no ha sido comprado aún.";
+                    echo $message;
+                }
+                echo "<form method='POST'>";
+                echo "<input type='hidden' name='product_id' value='" . $p->getId() . "' />";
+                echo "<button type='submit' name='comprar_" . $p->getId() . "' style='padding: 10px 20px; background-color: #28a745; color: #fff; border: none; cursor: pointer;'>Comprar</button>";
+
+                // Mostrar campos adicionales al hacer clic en el botón
+                if (isset($_POST['comprar_' . $p->getId()])) {
+                    echo "<br />";
+                    echo "<label for='cantidad'>Cantidad:</label>";
+                    echo "<input type='number' name='cantidad' min='1' max='" . $p->getCantidad() . "' required placeholder='Cantidad' />";
+                    echo "<br /><br />";
+
+                    // Botón de Confirmar Pedido
+                    echo "<button type='submit' name='confirmar' style='padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer;'>Añadir al carrito</button>";
+                }
+                echo "</form>";
+
+                // Añadir al carrito en la tabla 'linea' al confirmar
+                if (isset($_POST['confirmar']) && $_POST['product_id'] == $p->getId()) {
+                    tiendaRepository::add($p->getId(), $p->getPrecio(), $_POST['cantidad'], $user->getId());
+                    echo "Producto añadido al carrito.";
+                    tiendaRepository::actualizarStock($p->getId(), $_POST['cantidad']);
+                }
+            } else {
+                $message = "<p><em>Inicia sesión para comprar productos.</em></p>";
                 echo $message;
             }
-            echo "<form method='POST'>";
-            echo "<input type='hidden' name='product_id' value='" . $p->getId() . "' />";
-            echo "<button type='submit' name='comprar_" . $p->getId() . "' style='padding: 10px 20px; background-color: #28a745; color: #fff; border: none; cursor: pointer;'>Comprar</button>";
 
-            // Mostrar campos adicionales al hacer clic en el botón
-            if (isset($_POST['comprar_' . $p->getId()])) {
-                echo "<br />";
-                echo "<label for='cantidad'>Cantidad:</label>";
-                echo "<input type='number' name='cantidad' min='1' max='" . $p->getCantidad() . "' required placeholder='Cantidad' />";
-                echo "<br /><br />";
-
-                // Botón de Confirmar Pedido
-                echo "<button type='submit' name='confirmar' style='padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer;'>Añadir al carrito</button>";
-            }
-            echo "</form>";
-
-            // Añadir al carrito en la tabla 'linea' al confirmar
-            if (isset($_POST['confirmar']) && $_POST['product_id'] == $p->getId()) {
-                tiendaRepository::add($p->getId(), $p->getPrecio(), $_POST['cantidad'], $user->getId());
-                echo "Producto añadido al carrito.";
-                tiendaRepository::actualizarStock($p->getId(), $_POST['cantidad']);
-            }
-        } else {
-            $message = "<p><em>Inicia sesión para comprar productos.</em></p>";
-            echo $message;
+            echo "</div><hr>";
         }
-
-        echo "</div><hr>";
     }
-}
-?>
-
+    ?>
 
     <br>
 
@@ -89,15 +87,12 @@ if (isset($_GET['view'])) {
         if (isset($_SESSION['user'])) {
             $user = $_SESSION['user'];
             echo "Hola " . $user->getUsername();
-			if($user->getUsername() !== 'invitado'){
-				echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
-			}
-            } else {
-                echo "Bienvenido, invitado.";
+            if($user->getUsername() !== 'invitado'){
+                echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
             }
+        } else {
+            echo "Bienvenido, invitado.";
+        }
     ?>
-
-
-
 </body>
 </html>

@@ -1,0 +1,16 @@
+<html>
+    <h1>Producto más vendido</h1>
+
+    <?php
+        $productoMasVendido = tiendaRepository::topProductSell();
+
+        if ($productoMasVendido) {
+            echo "<p>El producto más vendido es: " . $productoMasVendido['nombre'] . "</p>";
+            echo "<p>Cantidad vendida: " . $productoMasVendido['total_vendido'] . " unidades</p>";
+        } else {
+            echo "<p>No hay productos vendidos aún.</p>";
+        }
+
+        echo "<a href='index.php?c=tienda&mainView=1'>Volver a la pagina principal</a>";
+    ?>
+</html>

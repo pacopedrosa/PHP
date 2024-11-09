@@ -1,0 +1,25 @@
+<html>
+    <h1>Mis pedidos</h1>
+
+    <?php
+        $user = $_SESSION['user'];
+        $pedidos = tiendaRepository::getOrders($user->getId());
+        
+        // Verifica si hay pedidos
+        if (count($pedidos) > 0) {
+            foreach ($pedidos as $pedido) {
+                echo "<p>Nombre de usuario: " . $pedido['username'] . "</p>";
+                echo "<p>Fecha de la compra: " . $pedido['fechaCompra'] . "</p>";
+                echo "<p>Total de la compra: " . $pedido['precioTotal'] . "€</p>";
+
+                // Enlace con el id_compra incluido
+                echo "<a href='index.php?tienda&recibido=1&id_pedido=" . $pedido['id_compra'] . "'>Recibido!</a>";
+                echo "<hr>";
+            }
+        } else {
+            echo "<p>No tienes pedidos.</p>";
+        }
+
+        echo "<a href='index.php?c=tienda&mainView=1'>Volver a la pagina principal</a>"
+    ?>
+</html>

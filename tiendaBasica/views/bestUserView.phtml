@@ -1,0 +1,14 @@
+<html>
+    <h1>Este es el usuario que más compras ha realizado</h1>
+
+    <?php
+    if ($topUser) {
+        echo "<p>El usuario con más compras es: <strong>" . $topUser['username'] . "</strong> con <strong>" . $topUser['total_compras'] . "</strong> compras.</p>";
+    } else {
+        echo "<p>No se encontraron resultados.</p>";
+    }
+
+    echo "<a href='index.php?c=tienda&mainView=1'>Volver a la pagina principal</a>"
+
+    ?>
+</html>

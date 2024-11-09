@@ -24,6 +24,11 @@
         require_once('views/deleteView.phtml');
         die();
     }
+
+    if(isset($_GET['orders'])){
+        require_once('views/ordersView.phtml');
+        die();
+    }
    
     
 
@@ -35,6 +40,16 @@
     if (isset($_GET['editProduct']) && isset($_GET['idProduct'])) {
         $idProduct = $_GET['idProduct'];
         require_once('views/editProductView.phtml');
+        die();
+    }
+    if(isset($_GET['topProduct'])){
+        require_once('views/topProductSellView.phtml');
+        die();
+    }
+
+    if(isset($_GET['topUser'])){
+        $topUser = tiendaRepository::topUserByPurchases();
+        require_once('views/bestUserView.phtml');
         die();
     }
 
@@ -75,7 +90,12 @@ if (
         echo "Producto eliminado";
     }
 
+    if (isset($_GET['recibido']) && isset($_GET['id_compra'])) {
+        $id_compra = $_GET['id_compra'];  // Obtener el id del pedido
+        tiendaRepository::actualizarEnviado($id_compra);  
+    }
     
-
+    
+    
 
 ?>

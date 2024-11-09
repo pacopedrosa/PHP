@@ -7,26 +7,47 @@
         $totalPedido = tiendaRepository::getPrecioTotal($user->getId());
         
         foreach ($productos as $producto) {
-            echo "Precio: " . $producto['precio'] . "€" .
+            echo "Precio: " . $producto['precio'] . "€" . 
                  ", Cantidad: " . $producto['cantidad'] . 
                  " El precio total seria: " . $totalPedido . "<br>";
         
             // Formulario para Confirmar Compra
             echo "<form method='POST' style='margin-top: 10px;'>";
             echo "<input type='hidden' name='product_id' value='" . $producto['id_producto'] . "' />";
-            echo "<button type='submit' name='confirmarCompra' style='padding: 10px 20px; 
-                 background-color: #007bff; color: #fff; border: none; cursor: pointer;'>";
-            echo "Confirmar Compra";
-            echo "</button>";
+            echo "<button type='submit' name='confirmarCompra' style='padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer;'>Confirmar Compra</button>";
             echo "</form>";
-        }        
-        
-        // Procesar la compra al hacer clic en Confirmar Compra
-        if (isset($_POST['confirmarCompra'])) {
+        }
+
+        // Mostrar formulario adicional para dirección y tipo de pago si se confirma la compra
+        if (isset($_POST["confirmarCompra"])) {
+            echo "<h2>Detalles de la compra</h2>";
+
+            // Formulario para ingresar dirección y tipo de pago
+            echo "<form method='POST' style='margin-top: 20px;'>";
+            echo "<label for='direccion'>Dirección:</label><br>";
+            echo "<input type='text' id='direccion' name='direccion' required placeholder='Ingresa tu dirección'><br><br>";
+
+            echo "<label for='tipo_pago'>Tipo de pago:</label><br>";
+            // Botón de "Tarjeta"
+            echo "<input type='radio' name='tipo_pago' value='tarjeta' " . (isset($_POST['tipo_pago']) && $_POST['tipo_pago'] == 'tarjeta' ? 'checked' : '') . " /> Tarjeta<br>";
+            // Botón de "Transferencia"
+            echo "<input type='radio' name='tipo_pago' value='transferencia' " . (isset($_POST['tipo_pago']) && $_POST['tipo_pago'] == 'transferencia' ? 'checked' : '') . " /> Transferencia<br><br>";
+
+            echo "<button type='submit' name='finalizarCompra' style='padding: 10px 20px; background-color: #28a745; color: #fff; border: none; cursor: pointer;'>Finalizar Compra</button>";
+            echo "</form>";
+        }
+
+        // Procesar la compra al hacer clic en Finalizar Compra
+        if (isset($_POST['finalizarCompra'])) {
+            // Recoger los datos del formulario
+            $direccion = $_POST['direccion'];
+            $tipo_pago = $_POST['tipo_pago'];
+
+            // Llamada a la función para procesar la compra
             $fecha = Date("Y-m-d H:i:s");
             $precioTotal = tiendaRepository::getPrecioTotal($user->getId());
-            $result = tiendaRepository::procesarCompra($user->getId(), $fecha, $precioTotal); // Asegúrate de que procesarCompra acepte el ID del producto
-        
+            $result = tiendaRepository::procesarCompra($user->getId(), $fecha, $precioTotal, $tipo_pago, $direccion);
+
             if ($result) {
                 echo "<p>Compra confirmada. Gracias por su compra.</p>";
             } else {
@@ -34,8 +55,6 @@
             }
         }
 
-        echo "<a href='index.php?c=tienda&mainView=1'>Volver a la pagina principal</a>";
+        echo "<a href='index.php?c=tienda&mainView=1'>Volver a la página principal</a>";
     ?>
-
-   
 </html>

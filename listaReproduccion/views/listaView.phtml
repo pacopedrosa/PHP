@@ -1,0 +1,15 @@
+<html>
+    <h1>Lista de canciones</h1>
+
+    <?php
+    echo "<h2>Nombre de la lista: ".$nombreLista."</h2>";
+
+    foreach ($canciones as $cancion) {
+        echo "<p>- ". $cancion->getTitulo()." - ".$cancion->getAutor()."</p>";
+    }
+    ?>
+
+
+    <br><br><br><br>
+    <a href="index.php?c=lista&mainView=1">Volver a la pagina principal</a>
+</html>

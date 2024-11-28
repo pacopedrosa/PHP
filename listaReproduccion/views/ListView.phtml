@@ -1,0 +1,60 @@
+<html>
+    <h1>Página principal</h1>
+    <a href="index.php?c=register&registerView=1">Register</a>
+    <a href="index.php?c=login&loginView=1">Login</a><br><br><br>
+
+
+    <a href="index.php?c=lista&add=1">Crear lista</a>
+    <?php
+        if(isset($_GET['add'])){
+            echo "<form action='index.php?c=lista&create=1' method='post'>";
+            echo "Título: <input type='text' name='titulo'><br>";
+            echo "<input type='submit' value='Crear'>";
+            echo "</form>";
+        }
+    ?>
+
+    <h2>Listas del usuario</h2>
+
+    <?php
+        if(isset($_SESSION['user']) && $_SESSION['user']!==false){
+        $listas = lista::getAllListas($_SESSION['user']->getId());
+            foreach ($listas as $lista) {
+                echo "<a href='index.php?c=lista&listaView=1&id=". $lista->getId()."'>- Titulo: ". $lista->getNombre()."</a><br>";  //Por si en algun momento hace falta que sea un enlace con id
+                echo "<br>";
+                echo "<a href='index.php?c=lista&createSong=1'>Crear cancion</a>";
+                echo "<br>";
+                if(isset($_GET['createSong'])){
+                    echo "<form action='index.php?c=lista&creates=1&id=". $lista->getId()."' method='post'>";
+                    echo "Canción: <input type='text' name='titulo'><br>";
+                    echo "Autor: <input type='text' name='autor'><br>";
+                    echo "Duracion: <input type='number' name='duracion'><br>";
+                    echo "<input type='submit' value='Añadir'>";
+                    echo "</form>";
+                }
+
+                echo "<a href='index.php?c=lista&song=1' method='post'>Añadir cancion a la lista</a><br><br>";
+                if(isset($_GET['song'])){
+                    echo "<form action='index.php?c=lista&addSong=1&id=". $lista->getId()."' method='post'>";
+                    echo "Canción: <input type='text' name='cancion'><br>";
+                    echo "<input type='submit' value='Añadir'>";
+                    echo "</form>";
+                }
+            }
+        }
+    ?>
+
+
+<br><br><br><br><br><br><br>
+<?php
+    if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        echo "Hola " . $user->getNombre();
+            if ($user->getNombre() !== 'invitado') {
+                echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
+            }
+        } else {
+            echo "Bienvenido, invitado. Por favor, inicia sesión.";
+        }
+?>
+</html>

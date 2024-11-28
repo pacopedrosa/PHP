@@ -1,0 +1,40 @@
+<html>
+<?php
+// Crear un coche verde de 1400 kg
+$coche = new Coche("Verde", 1400, 4, 0); // 4 puertas, sin cadenas de nieve
+// Añadir dos personas de 65 kg cada una
+$coche->anadir_persona(65);
+$coche->anadir_persona(65);
+// Mostrar color y peso
+echo "<br>Color del coche: " . $coche->getColor();
+echo "<br>Peso del coche: " . $coche->getPeso() . " kg";
+
+// Cambiar color a rojo y añadir dos cadenas para nieve
+$coche->repintar("Rojo");
+$coche->anadir_cadenas_nieve(2);
+// Mostrar color y número de cadenas de nieve
+echo "<br>Color del coche (nuevo): " . $coche->getColor();
+echo "<br>Número de cadenas de nieve: " . $coche->numero_cadenas_nieve;
+
+// Crear un vehículo de dos ruedas negro de 120 kg
+$dosRuedas = new Dos_ruedas("Negro", 120, 125); // 125cc como ejemplo
+// Añadir una persona de 80 kg
+$dosRuedas->anadir_persona(80);
+// Poner 20 litros de gasolina (equivalente a 20 kg)
+$dosRuedas->poner_gasolina(20);
+// Mostrar color y peso
+echo "<br>Color de dos ruedas: " . $dosRuedas->getColor();
+echo "<br>Peso de dos ruedas: " . $dosRuedas->getPeso() . " kg";
+
+// Crear un camión azul de 10000 kg, 10 metros de longitud, 2 puertas
+$camion = new Camion("Azul", 10000, 2, 10);
+// Añadir remolque de 5 metros y una persona de 80 kg
+$camion->anadir_remolque(5);
+$camion->anadir_persona(80);
+// Mostrar color, peso, longitud y número de puertas
+echo "<br>Color del camión: " . $camion->getColor();
+echo "<br>Peso del camión: " . $camion->getPeso() . " kg";
+echo "<br>Longitud del camión: " . $camion->longitud . " metros";
+echo "<br>Número de puertas del camión: 2";
+?>
+</html>

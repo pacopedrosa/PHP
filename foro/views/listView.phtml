@@ -1,0 +1,156 @@
+<html>
+<h1>Página principal</h1>
+<a href="index.php?c=register&registerView=1">Register</a>
+<a href="index.php?c=login&loginView=1">Login</a>
+
+<?php
+if (isset($_SESSION["user"])) {
+    $user = $_SESSION["user"];
+    if ($user->esAdmin()) {
+        echo "<h3>Perteneces a la sección de administradores.</h3>";
+        echo "<a href='index.php?c=admin&adminView=1'>Panel de administradores</a>";
+    }
+} else {
+    echo "<br>No estás logueado.";
+}
+?>
+
+<?php
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    $foros = Foro::getAllForos();
+    $temas = Tema::getAllTemas();
+    $comentarios = Comentario::getAllComments();
+
+    if ($user->getNombre() !== 'invitado') {
+        // Foros públicos
+        echo '<h3>Lista de foros públicos</h3>';
+        foreach ($foros as $foro) {
+            if ($foro->esPublico()) {
+                echo "<h4>Título: " . $foro->getNombre() . "</h4>";
+
+                // Mostrar temas del foro público
+                foreach ($temas as $tema) {
+                    if ($tema->getIdForo() == $foro->getId() && $tema->getVisible() == 1) {
+                        echo "<p>Tema: " . $tema->getNombre();
+
+                        // Mostrar comentarios del tema actual
+                        echo "<div style='margin-left: 20px;'>";
+                        foreach ($comentarios as $comentario) {
+                            if ($comentario->getIdTema() == $tema->getId() && $comentario->getVisible() == 1) {
+                                echo "<blockquote>Comentario: " . $comentario->getInformacion();}
+                        }
+                        echo "</div>";
+
+                        // Enlace para comentar en el tema
+                        echo "<a href='index.php?c=foro&addComment=1&idTema=" . $tema->getId() . "'>Comentar</a><br>";
+                        if (isset($_GET['addComment']) && $_GET['idTema'] == $tema->getId()) {
+                            echo "
+                            <form action='index.php?c=foro&saveComment=1&idTema=" . $tema->getId() . "' method='POST'>
+                                <input type='text' name='informacion' placeholder='Escribe aquí tu comentario'>
+                                <input type='submit' value='Comentar'>
+                            </form>";
+                        }
+                    }
+                }
+
+                // Formulario para añadir temas al foro público
+                echo "<a href='index.php?c=foro&addTema=1&idForo=" . $foro->getId() . "'>Añadir Tema</a><br>";
+                if (isset($_GET['addTema']) && $_GET['idForo'] == $foro->getId()) {
+                    echo "
+                    <form action='index.php?c=foro&newTema=1&idForo=" . $foro->getId() . "' method='POST'>
+                        <input type='text' name='nombre' placeholder='Escribe aquí el título del tema'>
+                        <input type='submit' value='Crear Tema'>
+                    </form>";
+                }
+            }
+        }
+
+        // Foros privados
+        echo '<h3>Lista de foros privados</h3>';
+        foreach ($foros as $foro) {
+            if (!$foro->esPublico()) {
+                echo "<h4>Título: " . $foro->getNombre() . "</h4>";
+
+                // Mostrar temas del foro privado
+                foreach ($temas as $tema) {
+                    if ($tema->getIdForo() == $foro->getId() && $tema->getVisible() == 1) {
+                        echo "<p>Tema: " . $tema->getNombre();
+
+                        // Mostrar comentarios del tema actual
+                        echo "<div style='margin-left: 20px;'>";
+                        foreach ($comentarios as $comentario) {
+                            if ($comentario->getIdTema() == $tema->getId() && $comentario->getVisible() == 1) {
+                                echo "<blockquote>Comentario: " . $comentario->getInformacion();}
+                        }
+                        echo "</div>";
+
+                        // Enlace para comentar en el tema
+                        echo "<a href='index.php?c=foro&addComment=1&idTema=" . $tema->getId() . "'>Comentar</a><br>";
+                        if (isset($_GET['addComment']) && $_GET['idTema'] == $tema->getId()) {
+                            echo "
+                            <form action='index.php?c=foro&saveComment=1&idTema=" . $tema->getId() . "' method='POST'>
+                                <input type='text' name='informacion' placeholder='Escribe aquí tu comentario'>
+                                <input type='submit' value='Comentar'>
+                            </form>";
+                        }
+                    }
+                }
+
+                // Formulario para añadir temas al foro privado
+                echo "<a href='index.php?c=foro&addTema=1&idForo=" . $foro->getId() . "'>Añadir Tema</a><br>";
+                if (isset($_GET['addTema']) && $_GET['idForo'] == $foro->getId()) {
+                    echo "
+                    <form action='index.php?c=foro&newTema=1&idForo=" . $foro->getId() . "' method='POST'>
+                        <input type='text' name='nombre' placeholder='Escribe aquí el título del tema'>
+                        <input type='submit' value='Crear Tema'>
+                    </form>";
+                }
+            }
+        }
+    }
+} else {
+    // Obtener todos los foros, temas y comentarios
+    $foros = Foro::getAllForos();
+    $temas = Tema::getAllTemas();
+    $comentarios = Comentario::getAllComments();
+
+    // Mostrar foros públicos, temas y comentarios para todos los usuarios
+    echo '<h3>Lista de foros públicos</h3>';
+    foreach ($foros as $foro) {
+        if ($foro->esPublico()) {
+            echo "<h4>Título: " . $foro->getNombre() . "</h4>";
+
+            // Mostrar temas del foro público
+            foreach ($temas as $tema) {
+                if ($tema->getIdForo() == $foro->getId() && $tema->getVisible() == 1) {
+                    echo "<p>Tema: " . $tema->getNombre() . "</p>";
+
+                    // Mostrar comentarios del tema actual
+                    echo "<div style='margin-left: 20px;'>";
+                    foreach ($comentarios as $comentario) {
+                        if ($comentario->getIdTema() == $tema->getId() && $comentario->getVisible() == 1) {
+                            echo "<blockquote>Comentario: " . $comentario->getInformacion() . "</blockquote>";
+                        }
+                    }
+                    echo "</div>";
+                }
+            }
+        }
+    }
+}
+?>
+
+<br><br><br>
+<?php
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    echo "Hola " . $user->getNombre();
+    if ($user->getNombre() !== 'invitado') {
+        echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
+    }
+} else {
+    echo "Bienvenido, invitado. Por favor, inicia sesión.";
+}
+?>
+</html>

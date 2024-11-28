@@ -1,0 +1,106 @@
+<?php
+// Mostrar contenido dependiendo del parámetro recibido en la URL
+if (isset($_GET['addForo'])) {
+    // Mostrar formulario para crear un foro
+    echo '<h1>Crear un nuevo foro</h1>';
+    echo '<form action="index.php?c=admin&add=1" method="POST">
+            <label for="foro">Nombre del foro:</label><br>
+            <input type="text" id="foro" name="nombre" required><br>
+            <label for="publico">¿Deseas que se vea?</label><br>
+            <input type="number" id="publico" name="publico" required><br>
+            <input type="submit" value="Crear foro">
+          </form>';
+} elseif (isset($_GET['ban'])) {
+    // Listar usuarios para banear
+    echo '<h1>Lista de usuarios</h1>';
+    $usuarios = User::getUsers();
+    if (!empty($usuarios)) {
+        foreach ($usuarios as $usuario) {
+            echo '<p>' . $usuario->getNombre() . ' - ' . $usuario->getEmail() . ' 
+                <a href="index.php?c=admin&banear=1&id=' . $usuario->getId() . '">Banear</a></p>';
+        }
+    } else {
+        echo '<p>No hay usuarios para mostrar.</p>';
+    }
+}else if(isset($_GET['role'])){
+
+    echo '<h1>Lista de usuarios</h1>';
+    $usuarios = User::getUsers();
+    if (!empty($usuarios)) {
+        foreach ($usuarios as $usuario) {
+            echo '<p>' . $usuario->getNombre() . ' - ' . $usuario->getEmail() . ' - ' . $usuario->esAdmin() . '
+                <a href="index.php?c=admin&rol=1&id=' . $usuario->getId() . '">cambiar rol</a></p>';
+        }
+    } else {
+        echo '<p>No hay usuarios para mostrar.</p>';
+    }
+}
+else if(isset($_GET['vistaAdmin'])){
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    $foros = Foro::getAllForos();
+    $temas = Tema::getAllTemas();
+    $comentarios = Comentario::getAllComments();
+
+    if ($user->getNombre() !== 'invitado') {
+        // Foros públicos
+        echo '<h3>Lista de foros públicos</h3>';
+        foreach ($foros as $foro) {
+            if ($foro->esPublico()) {
+                echo "<h4>Título: " . $foro->getNombre() . "</h4>";
+
+                // Mostrar temas del foro público
+                foreach ($temas as $tema) {
+                    if ($tema->getIdForo() == $foro->getId() && $tema->getVisible() == 1) {
+                        echo "<p>Tema: " . $tema->getNombre() . " <a href='index.php?c=foro&deleteTema=1&idTema=" . $tema->getId() . "'>Eliminar Tema</a></p>";
+
+                        // Mostrar comentarios del tema actual
+                        echo "<div style='margin-left: 20px;'>";
+                        foreach ($comentarios as $comentario) {
+                            if ($comentario->getIdTema() == $tema->getId() && $comentario->getVisible() == 1) {
+                                echo "<blockquote>Comentario: " . $comentario->getInformacion() . 
+                                     " <a href='index.php?c=foro&ocultarComentario=1&idComentario=" . $comentario->getId() . "'>Ocultar</a></blockquote>";
+                            }
+                        }
+                        echo "</div>";
+                    }
+                }
+            }
+        }
+
+        // Foros privados
+        echo '<h3>Lista de foros privados</h3>';
+        foreach ($foros as $foro) {
+            if (!$foro->esPublico()) {
+                echo "<h4>Título: " . $foro->getNombre() . "</h4>";
+
+                // Mostrar temas del foro privado
+                foreach ($temas as $tema) {
+                    if ($tema->getIdForo() == $foro->getId() && $tema->getVisible() == 1) {
+                        echo "<p>Tema: " . $tema->getNombre() . " <a href='index.php?c=foro&deleteTema=1&idTema=" . $tema->getId() . "'>Eliminar Tema</a></p>";
+
+                        // Mostrar comentarios del tema actual
+                        echo "<div style='margin-left: 20px;'>";
+                        foreach ($comentarios as $comentario) {
+                            if ($comentario->getIdTema() == $tema->getId() && $comentario->getVisible() == 1) {
+                                echo "<blockquote>Comentario: " . $comentario->getInformacion() . 
+                                     " <a href='index.php?c=foro&ocultarComentario=1&idComentario=" . $comentario->getId() . "'>Ocultar</a></blockquote>";
+                            }
+                        }
+                        echo "</div>";
+                    }
+                }
+            }
+        }
+    }
+}
+}else {
+    // Página principal de administradores
+    echo '<h1>Pagina de administradores</h1>';
+    echo '<a href="index.php?c=admin&addForo=1">Crear foro</a><br>';
+    echo '<a href="index.php?c=admin&ban=1">Banear usuarios</a><br>';
+    echo '<a href="index.php?c=admin&role=1">Modificar permisos</a><br>';
+    echo '<a href="index.php?c=admin&vistaAdmin=1">Moderar temas (ocultar temas completos o respuestas concretas)</a><br>';
+}
+?>
+<a href="index.php?c=foro&mainView=1">Volver a la pagina principal</a>

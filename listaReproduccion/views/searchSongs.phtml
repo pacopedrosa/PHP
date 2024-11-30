@@ -1,3 +1,19 @@
 <html>
-    <h1>Resultado de tu busqueda</h1>
+    <h1>Resultados de la Búsqueda</h1>
+    <?php
+    if (!empty($songs)) {
+        echo "<ul>";
+        foreach ($songs as $song) {
+            echo "<li>";
+            echo "<strong>Título:</strong> " . $song->getTitulo() . "<br>";
+            echo "<strong>Autor:</strong> " . $song->getAutor() . "<br>";
+            echo "<strong>Duración:</strong> " . $song->getDuracion() . " segundos";
+            echo "</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>No se encontraron canciones.</p>";
+    }
+    ?>
+    <a href="index.php">Volver</a>
 </html>

@@ -4,7 +4,7 @@
         private $nombreLista;
         private $id_cancion;
         private $id_user;
-        
+
         public function __construct($id_lista, $nombreLista, $id_cancion, $id_user) {
             $this->id_lista = $id_lista;
             $this->nombreLista = $nombreLista;
@@ -15,15 +15,15 @@
         public function getId(){
             return $this->id_lista;
         }
-        
+
         public function getNombre(){
             return $this->nombreLista;
         }
-        
+
         public function getCancion(){
             return $this->id_cancion;
         }
-        
+
         public function getUser(){
             return $this->id_user;
         }
@@ -59,5 +59,10 @@
             }
         }
 
+        public static function addSongToList($id_lista, $id_cancion){
+            $db = Connection::connect();
+            $q = "INSERT INTO lista_cancion (id_lista, id_cancion) VALUES ($id_lista, $id_cancion)";
+            return $db->query($q);
+        }
     }
 ?>

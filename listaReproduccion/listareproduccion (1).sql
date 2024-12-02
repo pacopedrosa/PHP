@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2024 a las 17:07:34
+-- Tiempo de generación: 02-12-2024 a las 12:21:42
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,16 +31,20 @@ CREATE TABLE `canciones` (
   `id_cancion` int(11) NOT NULL,
   `titulo` text NOT NULL,
   `autor` text NOT NULL,
-  `duracion` int(11) NOT NULL,
-  `id_lista` int(11) NOT NULL
+  `duracion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `canciones`
 --
 
-INSERT INTO `canciones` (`id_cancion`, `titulo`, `autor`, `duracion`, `id_lista`) VALUES
-(1, 'HMHM remix', 'rvfv', 180, 1);
+INSERT INTO `canciones` (`id_cancion`, `titulo`, `autor`, `duracion`) VALUES
+(1, 'HMHM remix', 'rvfv', 180),
+(10, 'pruebaLista', 'rvfv', 4),
+(11, 'hola', 'plex', 90),
+(12, 'probando', 'paco', 20),
+(13, 'pruebaCancion2', 'paco', 90),
+(14, 'wfrwfwef', 'wefwf', 99);
 
 -- --------------------------------------------------------
 
@@ -51,7 +55,6 @@ INSERT INTO `canciones` (`id_cancion`, `titulo`, `autor`, `duracion`, `id_lista`
 CREATE TABLE `listas` (
   `id_lista` int(11) NOT NULL,
   `nombreLista` text NOT NULL,
-  `id_cancion` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -59,8 +62,20 @@ CREATE TABLE `listas` (
 -- Volcado de datos para la tabla `listas`
 --
 
-INSERT INTO `listas` (`id_lista`, `nombreLista`, `id_cancion`, `id_user`) VALUES
-(1, 'pruebaLista', 0, 1);
+INSERT INTO `listas` (`id_lista`, `nombreLista`, `id_user`) VALUES
+(1, 'pruebaLista', 1),
+(3, 'hola', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `lista_canciones`
+--
+
+CREATE TABLE `lista_canciones` (
+  `id_lista` int(11) NOT NULL,
+  `id_cancion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -112,13 +127,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `canciones`
 --
 ALTER TABLE `canciones`
-  MODIFY `id_cancion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_cancion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `listas`
 --
 ALTER TABLE `listas`
-  MODIFY `id_lista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_lista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

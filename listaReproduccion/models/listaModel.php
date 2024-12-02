@@ -2,13 +2,11 @@
     class lista{
         private $id_lista;
         private $nombreLista;
-        private $id_cancion;
         private $id_user;
 
-        public function __construct($id_lista, $nombreLista, $id_cancion, $id_user) {
+        public function __construct($id_lista, $nombreLista, $id_user) {
             $this->id_lista = $id_lista;
             $this->nombreLista = $nombreLista;
-            $this->id_cancion = $id_cancion;
             $this->id_user = $id_user;
         }
 
@@ -20,9 +18,7 @@
             return $this->nombreLista;
         }
 
-        public function getCancion(){
-            return $this->id_cancion;
-        }
+
 
         public function getUser(){
             return $this->id_user;
@@ -33,7 +29,7 @@
             $query = $db->query("SELECT * FROM listas WHERE id_user = $id_user");
             $listas = [];
             while($row = $query->fetch_assoc()){
-                $listas[] = new Lista($row['id_lista'], $row['nombreLista'], $row['id_cancion'], $row['id_user']);
+                $listas[] = new Lista($row['id_lista'], $row['nombreLista'], $row['id_user']);
             }
             return $listas;
         }
@@ -59,10 +55,11 @@
             }
         }
 
-        public static function addSongToList($id_lista, $id_cancion){
+        public static function addSongToList($id_lista, $id_cancion) {
             $db = Connection::connect();
-            $q = "INSERT INTO lista_cancion (id_lista, id_cancion) VALUES ($id_lista, $id_cancion)";
+            $q = "INSERT INTO lista_canciones (id_lista, id_cancion) VALUES ('$id_lista', '$id_cancion')";
             return $db->query($q);
         }
+        
     }
 ?>

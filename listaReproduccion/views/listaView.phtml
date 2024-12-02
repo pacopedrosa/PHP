@@ -2,7 +2,7 @@
     <h1>Lista de canciones</h1>
 
     <?php
-    echo "<h2>Nombre de la lista: ".$nombreLista."</h2>";
+    echo "<h2>Nombre de la lista: ".$nombreLista.". Duracion de la lista: ".$duracion." segundos</h2>";
 
     foreach ($canciones as $cancion) {
         echo "<p>- ". $cancion->getTitulo()." - ".$cancion->getAutor()."</p>";

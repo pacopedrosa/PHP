@@ -29,9 +29,9 @@
             echo "<br>";
 
             // Enlace para crear una nueva canción
-            echo "<a href='index.php?c=lista&createSong=1&id=" . $lista->getId() . "'>Crear canción</a><br>";
-            if (isset($_GET['createSong']) && $_GET['id'] == $lista->getId()) {
-                echo "<form action='index.php?c=lista&creates=1&id=" . $lista->getId() . "' method='post'>";
+            echo "<a href='index.php?c=lista&createSong=1" . "'>Crear canción</a><br>";
+            if (isset($_GET['createSong'])) {
+                echo "<form action='index.php?c=lista&creates=1" . "' method='post'>";
                 echo "Canción: <input type='text' name='titulo' required><br>";
                 echo "Autor: <input type='text' name='autor' required><br>";
                 echo "Duración: <input type='number' name='duracion' required><br>";
@@ -40,16 +40,19 @@
             }
 
             // Enlace para añadir una canción a la lista
-            echo "<br><a href='index.php?c=lista&addSong=1&id=" . $lista->getId() . "'>Añadir canción a la lista</a><br><br>";
-            if (isset($_GET['addSong']) && $_GET['id'] == $lista->getId()) {
+
+            //aqui me coje el nombre de la cancion por post y deberia recibir el id de la cancion para añadirla a la lista
+
+            echo "<br><a href='index.php?c=lista&addSong=1&id=" . $lista->getId() . "'>Añadir canción a la lista</a><br><br>" . "<br>" . "<br>";
+            if (isset($_GET['addSong']) && $_GET['id']) {
                 echo "<form action='index.php?c=lista&addSongToList=1&id=" . $lista->getId() . "' method='post'>";
                 echo "Canción: <input type='text' name='cancion' list='songList' required><br>";
                 echo "<datalist id='songList'>";
-                
+               
                 // Mostrar las canciones disponibles para añadir
-                $songs = cancion::getAllSongsByLista($lista->getId());
+                $songs = cancion::getAllSongs();
                 foreach ($songs as $song) {
-                    echo "<option value='" . $song->getTitulo() . "'>";
+                    echo "<option value='" . $song->getTitulo() . "' name='hola'>";
                 }
                 echo "</datalist>";
                 

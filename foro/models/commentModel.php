@@ -66,7 +66,7 @@ class Comentario {
     // Método para obtener comentarios de un tema específico
     public static function getCommentsByTema($id_tema) {
         $db = Connection::connect();
-        $query = "SELECT * FROM comentarios WHERE id_tema = ?";
+        $query = "SELECT * FROM comentarios WHERE id_tema = '$id_tema'";
         $result = $db->query($query);
         $comentarios = [];
         while ($row = $result->fetch_assoc()) {

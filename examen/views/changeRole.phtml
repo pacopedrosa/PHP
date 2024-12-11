@@ -1,0 +1,21 @@
+<html>
+    <h1>Usuarios:</h1>
+
+
+    <?php
+        $usuarios = User::getUsers();
+
+        if(isset($_GET['change'])){
+            foreach($usuarios as $user){
+                if($user->getRole() != 2){
+                echo "- " .$user->getUsername() . "   <a href='index.php?c=admin&changeRol=1&id=".$user->getId()."'>X</a>" . "     <a href='index.php?c=admin&newRol=1&id=".$user->getId()."'>✔</a>" . "<br>";
+                }
+            }
+        }
+    ?>
+
+
+
+        <a href="index.php">Volver</a>
+    
+</html>

@@ -1,0 +1,15 @@
+<html>
+    <h1>Listado de empresas:</h1>
+
+    <?php
+        $empresas = Empresa::getEmpresas();
+        foreach ($empresas as $empresa){
+            echo "- ".$empresa->getNombre()."   <a href='index.php?c=profesor&delete=1&id=".$empresa->getId()."'>X</a><br>";
+        }
+    ?>
+
+
+<br><br>
+
+<a href="index.php?c=profesor&profesorView=1">Volver</a>
+</html>

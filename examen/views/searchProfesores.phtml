@@ -1,0 +1,20 @@
+<html>
+    <h1>Profesores encontrados:</h1>
+    <?php
+    if (!empty($profesor)) {
+        echo "<ul>";
+        foreach ($profesor as $profesores) {
+            echo "<li>";
+            echo "<strong>Nombre:</strong> " . $profesores->getusername() . "<br>";
+            echo "<strong>Rol:</strong> " . $profesores->getRole() . "<br>";
+            echo "</li>";
+            echo "<br><br>";
+        }
+        echo "</ul>";
+        
+    } else {
+        echo "<p>No se encontraron alumnos.</p>";
+    }
+    ?>
+    <a href="index.php">Volver</a>
+</html>

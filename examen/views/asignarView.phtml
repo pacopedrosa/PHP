@@ -1,0 +1,49 @@
+<h1>Formulario de Asignaciones</h1>
+
+<h3>Posibles empresas</h3>
+<select name="nombreEmpresa" required>
+    <?php
+    $empresas = Empresa::getEmpresas();
+    foreach ($empresas as $empresa) {
+        echo "<option value='". $empresa->getNombre() ."'>" . $empresa->getNombre() . "</option>";
+    }
+    ?>
+</select>
+<br><br>
+
+<h3>Posibles usuarios</h3>
+<select name="nombreUsuario" required>
+    <?php
+    $usuarios = User::getUsers();
+    foreach ($usuarios as $usuario) {
+        if ($usuario->getRole() == 0) {
+            echo "<option value='" . $usuario->getUsername() . "'>" . $usuario->getUsername() . "</option>";
+        }
+    }
+    ?>
+</select>
+<br><br>
+
+<h3>Posibles tutores</h3>
+<select name="nombreTutor" required>
+    <?php
+    $tutores = User::getUsers();
+    foreach ($tutores as $usuario) {
+        if ($usuario->getRole() == 1) {
+            echo "<option value='" . $usuario->getUsername() . "'>" . $usuario->getUsername() . "</option>";
+        }
+    }
+    ?>
+</select>
+<br><br>
+
+<form action="index.php?c=profesor&alumnoAsignado=1" method="post">
+    <input type="date" name="fechaComienzo" placeholder="fecha de comienzo" required><br><br>
+    <input type="date" name="fechaFin" placeholder="fecha de fin" required><br><br>
+    <button type="submit">Enviar</button>
+</form>
+
+
+<br><br>
+
+<a href="index.php?c=profesor">Volver</a>

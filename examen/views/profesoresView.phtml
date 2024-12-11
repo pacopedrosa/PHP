@@ -1,0 +1,22 @@
+<html>
+    <h1>Listado de profesores:</h1>
+
+    <h2>Buscar profesores</h2>
+        <form action="index.php?c=profesor&searchProfesores=1" method="post">
+            <input type="text" name="query" placeholder="Buscar por título o autor" required>
+            <button type="submit">Buscar</button>
+    </form>
+
+    <?php
+    $alumnos = User::getUsers();
+    foreach ($alumnos as $alumno) {
+        if($alumno->getRole() == 1) {
+            echo "- " . $alumno->getUsername() . "<br>";
+        }
+    }
+   ?>
+
+<br><br>
+
+<a href="index.php?c=profesor&profesorView=1">Volver</a>
+</html>

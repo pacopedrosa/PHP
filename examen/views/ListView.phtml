@@ -1,0 +1,58 @@
+<html>
+    <body>
+        
+    <h1>PAGINA PRINCIPAL</h1>
+    <br>
+    <a href="index.php?c=register&registerView=1">register</a>
+    <a href="index.php?c=login&loginView=1">login</a>
+    
+    <br><br>
+    <?php
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+        if($user->getRole() == 2){
+            echo "<a href='index.php?c=admin&adminView=1'>Ir a pagina de admin</a>";
+        }
+    }
+    echo "<br>";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+        if(($user->getRole() == 1) || ($user->getRole() == 2)){
+            echo "<a href='index.php?c=profesor&profesorView=1'>Ir a pagina de profesores</a>";
+        }
+    }
+
+
+
+
+    if(isset($_GET['editAsignacionAlumno'])){
+         echo "<h1>Formulario de Asignación de Tutor Docente</h1>";
+        echo "<form action='index.php?c=profesor&editAsignacionAlumnado=1&id=".$_GET['id']."' method='post'>";
+        echo "<input type='text' name='nombreEmpresa' placeholder='nombre de empresa' required><br><br>";
+        echo "<input type='text' name='nombreUsuario' placeholder='nombre del usuario' required><br><br>";
+        echo "<input type='date' name='fechaComienzo' placeholder='fecha de comienzo' required><br><br>";
+        echo "<input type='date' name='fechaFin' placeholder='fecha de fin' required><br><br>";
+        echo "<input type='text' name='nombreTutor' placeholder='nombre del tutor' required><br><br>";
+        echo "<button type='submit'>Enviar</button>";
+        echo "</form>";
+    }
+    ?>
+
+
+
+<br><br><br>
+
+
+<?php
+        if (isset($_SESSION['user'])) {
+            $user = $_SESSION['user'];
+            echo "Hola " . $user->getUsername();
+            if($user->getUsername() !== 'invitado'){
+                echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
+            }
+        } else {
+            echo "Bienvenido, invitado.";
+        }
+    ?>
+    </body>
+</html>

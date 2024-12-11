@@ -1,0 +1,41 @@
+<html>
+
+    <h2>Buscar por empresa</h2>
+        <form action="index.php?c=profesor&searchList=1" method="post">
+            <input type="text" name="query" placeholder="Buscar por título o autor" required>
+            <button type="submit">Buscar</button>
+    </form>
+
+<?php
+
+        $listas = Lista::listaOrdenada();
+        foreach ($listas as $lista){
+            $id_empresa = $lista->getIdEmpresa();
+            $empresa = Empresa::getEmpresaById($id_empresa);
+            $id_user = $lista->getIdUser();
+            $user = User::getUserById($id_user);
+            $id_tutor = $lista->getIdTutor();
+            $tutor = User::getUserById($id_tutor);
+
+            echo "<p>Empresa: ". $empresa->getNombre()."</p>";
+            echo "<p>Usuario: ". $user->getUsername()."</p>";
+            echo "<p>Tutor: ". $tutor->getUsername()."</p>";
+            echo "<p>Fecha de comienzo: ". $lista->getFechaInicio()."</p>";
+            echo "<p>Fecha de fin: ". $lista->getFechaFin()."</p>";
+            echo "<a href='index.php?c=profesor&editAsignacionAlumno=1&id=". $lista->getId()."'>Editar</a>" . "<br>";
+            echo "<a href='index.php?c=profesor&eliminarAsignacion=1&id=". $lista->getId()."'>Eliminar</a>";
+            echo "<br><br>";
+
+
+        }
+
+
+       
+
+?>
+
+<br><br>
+<a href="index.php?c=profesor&profesorView=1">Volver</a>
+
+
+</html>

@@ -1,0 +1,26 @@
+<html>
+    <h1>Resultados de la Búsqueda</h1>
+    <?php
+    if (!empty($buscador)) {
+        echo "<ul>";
+        foreach ($buscador as $busca) {
+            $tutor = User::getUserById($empresa->getIdUser());
+            $usuario = User::getUserById($empresa->getIdUser());
+            
+            echo "<li>";
+            echo "<strong>Empresa:</strong> " . $empresa->getNombre() . "<br>";
+            echo "<strong>Usuario:</strong> " . $usuario->getUsername() . "<br>";
+            echo "<strong>Tutor:</strong> " . $tutor->getUsername(). "<br>";
+            echo "<strong>Fecha Inicio:</strong> " . $busca->getFechaInicio() . "<br>";
+            echo "<strong>Fecha Fin:</strong> " . $busca->getFechaFin() . "<br>";
+            echo "</li>";
+            echo "<br><br>";
+        }
+        echo "</ul>";
+        
+    } else {
+        echo "<p>No se encontraron asignaciones.</p>";
+    }
+    ?>
+    <a href="index.php">Volver</a>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de la Búsqueda</title>
+</head>
+<body>
+    <h1>Resultados de la Búsqueda</h1>
+    
+    <?php if (!empty($empresas)): ?>
+        <?php foreach ($empresas as $empresa): ?>
+            <ul>
+                <li><strong>ID Empresa:</strong> <?php echo $empresa->getId(); ?></li>
+                <li><strong>Nombre:</strong> <?php echo $empresa->getNombre(); ?></li>
+                <li><strong>NIF:</strong> <?php echo $empresa->getNif(); ?></li>
+                <li><strong>Dirección:</strong> <?php echo $empresa->getDireccion(); ?></li>
+                <li><strong>Teléfono:</strong> <?php echo $empresa->getTelefono(); ?></li>
+                <li><strong>Email:</strong> <?php echo $empresa->getEmail(); ?></li>
+                <li><strong>Visible:</strong> <?php echo $empresa->isVisible() ? 'Sí' : 'No'; ?></li>
+            </ul>
+            <hr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No se encontraron resultados para tu búsqueda.</p>
+    <?php endif; ?>
+
+    <a href="index.php">Volver</a>
+</body>
+</html>

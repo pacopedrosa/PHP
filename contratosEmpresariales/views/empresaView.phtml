@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Empresa</title>
+</head>
+<body>
+    <h1>Detalles de la Empresa</h1>
+    
+    <?php if (isset($empresa)): ?>
+        <ul>
+            <li><strong>ID Empresa:</strong> <?php echo $empresa->getId(); ?></li>
+            <li><strong>Nombre:</strong> <?php echo $empresa->getNombre(); ?></li>
+            <li><strong>NIF:</strong> <?php echo $empresa->getNif(); ?></li>
+            <li><strong>Dirección:</strong> <?php echo $empresa->getDireccion(); ?></li>
+            <li><strong>Teléfono:</strong> <?php echo $empresa->getTelefono(); ?></li>
+            <li><strong>Email:</strong> <?php echo $empresa->getEmail(); ?></li>
+            <li><strong>Visible:</strong> <?php echo $empresa->isVisible() ? 'Sí' : 'No'; ?></li>
+        </ul>
+
+        <h2>Contactos</h2>
+        <ul>
+            <?php foreach ($personasContacto as $persona): ?>
+                <li>
+                    <strong>Nombre:</strong> <?php echo $persona->getNombre(); ?><br>
+                    <strong>Puesto:</strong> <?php echo $persona->getPuesto(); ?><br>
+                    <strong>Teléfono:</strong> <?php echo $persona->getTelefono(); ?><br>
+                    <strong>Email:</strong> <?php echo $persona->getEmail(); ?><br>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>No hay datos de la empresa disponibles.</p>
+    <?php endif; ?>
+
+    <a href="index.php">Volver</a>
+</body>
+</html>

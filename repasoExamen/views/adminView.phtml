@@ -1,0 +1,30 @@
+<html>
+
+    <h1>Administración</h1>
+
+    <a href="index.php?c=foro&crearForo=1">Crear foro</a>
+    <a href="index.php?c=admin&list=1&banear=1">Banear usuarios</a>
+    <a href="index.php?c=admin&list=1&giveAdmin=1">Dar admin</a>
+
+    <?php
+        if(isset($_GET['banear'])){
+            $users = userRepository::getUsers();
+            echo "<h2>Usuarios</h2>";
+            foreach($users as $user){
+                echo "<p>".$user->getNombre()."</p>";
+                echo "<a href='index.php?c=admin&ban=1&idUser=".$user->getId()."'>Banear</a>";
+                echo "<a href='index.php?c=admin&unBan=1&idUser=".$user->getId()."'>Unban</a>";
+            }
+        }
+
+        if(isset($_GET['giveAdmin'])){
+            $users = userRepository::getUsers();
+            echo "<h2>Usuarios</h2>";
+            foreach($users as $user){
+                echo "<p>".$user->getNombre()."</p>";
+                echo "<a href='index.php?c=admin&darAdmin=1&idUser=".$user->getId()."'>Dar admin</a>";
+                echo "<a href='index.php?c=admin&quitarAdmin=1&idUser=".$user->getId()."'>Quitar admin</a>";
+            }
+        }
+    ?>
+</html>

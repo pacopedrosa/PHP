@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Empresa</title>
+</head>
+<body>
+    <h1>Editar Empresa</h1>
+
+    <?php
+    echo "El NIF y el Teléfono deben ser numeros";
+    echo '<br><br><form action="index.php?c=contratos&update&id='.$_GET['id'].'" method="POST">
+        Nombre: <input type="text" name="nombre"><br><br>
+        NIF: <input type="text" name="nif"><br><br>
+        Dirección: <input type="text" name="direccion"><br><br>
+        Teléfono: <input type="text" name="telefono"><br><br>
+        Correo: <input type="text" name="email"><br><br>
+        Visible: <select name="visible">
+            <option value="1">Sí</option>
+            <option value="0">No</option>
+        </select><br><br>
+        <input type="submit" name="update" value="Guardar">
+    </form>';
+    ?>
+</body>
+</html>

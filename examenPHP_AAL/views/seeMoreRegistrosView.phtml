@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+</head>
+
+<body>
+    <?php
+    if (isset($_SESSION['user'])) {
+
+
+        echo "<h2>Listado de todos los registros</h2>";
+        
+        foreach ($registros as $registro){
+            $contacto=ContactRepository::getContactByRegistro($registro->getIdContact());
+            
+                echo "REGISTRO:".$registro->getId()."<br>";
+                echo "FECHA: ".$registro->getDate()."<br>";
+                echo "NOTACION: ".$registro->getNotacion()."<br>";
+                echo "NOMBRE: ".$contacto->getNombre()."<br><br>";
+                echo "<hr>";
+            
+
+           
+            
+           
+        }
+
+        
+              
+    }
+
+    
+
+ 
+
+
+  
+    ?>
+</body>
+
+</html>

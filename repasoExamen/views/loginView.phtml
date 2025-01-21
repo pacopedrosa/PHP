@@ -1,0 +1,16 @@
+
+    <h1>Login</h1>
+    <form action="index.php?c=login" method="post">
+        <input type="text" name="username" placeholder="Nombre de usuario" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <input type="submit" value="Iniciar sesión" name="login">
+    </form>
+
+    <?php
+    // Mostrar mensaje de error si las credenciales son inválidas o el usuario está baneado
+    if (isset($error)) {
+        echo "<p style='color:red;'>$error</p>";
+    }
+    ?>
+</body>
+</html>

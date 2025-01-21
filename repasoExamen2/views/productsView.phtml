@@ -1,0 +1,37 @@
+<h1>Página de gestión de productos</h1>
+
+<?php
+echo "<h3>Estas son tus productos</h3>";
+echo "<a href='index.php?c=tienda&list=1&add=1'>Añadir producto</a>" . "<br>" . "<br>";
+
+if (isset($_GET['list'])) {
+    echo "<h3>Añadir un nuevo producto</h3>";
+    echo "
+    <form action='index.php?c=tienda&create=1' method='POST' enctype='multipart/form-data'>
+        <label for='nombre'>Nombre:</label><br>
+        <input type='text' id='nombre' name='nombre' required><br><br>
+        
+        <label for='descripcion'>Descripción:</label><br>
+        <textarea id='descripcion' name='descripcion' rows='4' required></textarea><br><br>
+        
+        <label for='imagen'>Imagen:</label><br>
+        <input type='file' id='imagen' name='imagen' accept='image/*' required><br><br>
+        
+        <label for='precio'>Precio:</label><br>
+        <input type='number' id='precio' name='precio' step='0.01' required><br><br>
+        
+        <label for='cantidad'>Cantidad:</label><br>
+        <input type='number' id='cantidad' name='cantidad' required><br><br>
+        
+        <button type='submit' name='crear'>Registrar Producto</button>
+    </form>
+    ";
+}
+
+$productos = productoRepository::getAllProducts();
+foreach ($productos as $product) {
+    echo "Nombre: " . $product->getNombre() .
+        "<a href='index.php?c=tienda&deleteProduct=1&idProduct=" . $product->getId() . "'> X</a>" .
+        "<a href='index.php?c=tienda&editProduct=1&idProduct=" . $product->getId() . "'> ✔</a>" . "<br>";
+}
+?>

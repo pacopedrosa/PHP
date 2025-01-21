@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<?php
+    echo '<h2>Listado de empresas</h2>';
+
+    echo '
+    <form action="index.php?buscarEmpresa='.$_SESSION['user']->getId().'&c=empresa" method="post">
+    Buscar Empresa:<input type="text" name="datoBuscado"  required>
+     <input type="submit" value="Buscar">
+    </form> <br><br>
+    ';
+
+    foreach ($empresas as $empresa){
+       
+        echo "<p><a href='index.php?c=empresa&seeDetails=".$empresa->getId()."'>".$empresa->getNombre()."</a></p>";
+        echo "<a href='index.php?c=empresa&editEmpresaView=".$empresa->getId()."'>editar/</a>";
+        echo "<a href='index.php?c=empresa&borrarEmpresa=".$empresa->getId()."'>borrar</a>";
+        
+        
+
+    }
+
+
+
+    
+?>
+
+</body>
+</html>

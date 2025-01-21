@@ -1,0 +1,14 @@
+<?php
+
+    foreach($registros as $registro){
+        $persona = personaContactoRepository::getPersonaById($registro->getIdPersona());
+
+        echo "Registro: ".$registro->getId()."<br>";
+        echo "Fecha: ".$registro->getFecha()."<br>";
+        echo "Notación: ".$registro->getAnotacion()."<br>";
+        echo "persona contacto: ".$persona->getNombre()."<br>";
+        echo "<hr>";
+    }
+    
+
+?>

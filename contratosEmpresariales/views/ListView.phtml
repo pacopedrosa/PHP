@@ -1,0 +1,89 @@
+<html>
+
+    <h1>Pagina principal</h1>
+
+    <a href="index.php?c=register&registerView=1">register</a>
+    <a href="index.php?c=login&loginView=1">Login</a>
+    <a href="index.php?c=contratos&create=1">Crear empresa</a>
+    <a href="index.php?editar=1">Editar empresa</a>
+    <a href="index.php?c=contratos&listCompany=1">Ver listado de empresas</a>
+</html>
+
+
+
+
+<?php
+
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    $registros = registroComunicacionRepository::getRegistros();
+    $numeroRegistrosAbiertos = registroComunicacionRepository::getRegistrosAbiertosPorUsuario($user->getId());
+
+    if ($user->getRole() == 0) {
+        if($numeroRegistrosAbiertos == 0){
+            echo "<a href='index.php?c=user&communication=1'>Registrar comunicacion con una empresa</a>";
+        }else{
+            echo "<h2>Listado de registros de comunicacion</h2>";
+            echo "<form action='index.php?c=user&searchByUser=1'>
+                        <input type='text' name='query' placeholder='Buscar por empresa'>
+                        <input type='submit' value='Buscar'>
+                    </form>";
+
+
+
+
+            foreach ($registros as $registro) {
+                if($registro->getCerrado() == 0) {
+                $contacto = personaContactoRepository::getPersonaById($registro->getIdPersona());
+
+                echo "REGISTRO:".$registro->getId()."<br>";
+                echo "FECHA: ".$registro->getFecha()."<br>";
+                echo "NOTACION: ".$registro->getAnotacion()."<br>";
+                echo "NOMBRE: ".$contacto->getNombre()."<br><br>";
+                echo "<a href='index.php?c=user&ended=1&id=".$registro->getId()."'>cerrar</a>";
+                echo "<hr>";
+                }
+            }
+        }
+    }
+}
+
+
+
+if(isset($_GET['editar'])){
+    $empresas = empresaRepository::getEmpresas();
+    echo "<h2>Empresas</h2>";
+    foreach ($empresas as $empresa) {
+        echo "<p>". $empresa->getNombre()."</p>";
+        echo "<a href='index.php?c=contratos&delete=1&id=". $empresa->getId()."'>Eliminar</a>";
+        echo "<a href='index.php?c=contratos&edit=1&id=". $empresa->getId()."'>Editar</a>";
+        echo "<br>";
+    }
+}
+
+
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+
+    if ($user->getRole() == 1) {
+        echo "<h3>Perteneces a la sección de administradores.</h3>";
+        echo "<a href='index.php?c=admin&adminView=1'>Panel de administradores</a>";
+    }
+}
+?>
+
+<br><br><br>
+
+<?php
+echo "<a href='index.php?c=user&viewCommunications=1'>Ver todos tus registros</a>";
+echo "<br><br><br>";
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    echo "Hola " . $user->getUsername();
+    if ($user->getUsername() !== 'invitado') {
+        echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
+    }
+} else {
+    echo "Bienvenido, invitado.";
+}
+?>

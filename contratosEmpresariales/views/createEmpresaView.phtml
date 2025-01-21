@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Empresa</title>
+</head>
+<body>
+    <h1>Formulario Empresa</h1>
+    <form action="index.php?c=contratos&crear=1" method="post">
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre"><br><br>
+
+        <label for="nif">NIF:</label><br>
+        <input type="text" id="nif" name="nif"><br><br>
+
+        <label for="direccion">Dirección:</label><br>
+        <input type="text" id="direccion" name="direccion"><br><br>
+
+        <label for="telefono">Teléfono:</label><br>
+        <input type="text" id="telefono" name="telefono"><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="visible">Visible:</label><br>
+        <input type="checkbox" id="visible" name="visible" value="1"><br><br>
+
+        <input type="submit" name="enviar" value="Enviar">
+    </form>
+</body>
+</html>

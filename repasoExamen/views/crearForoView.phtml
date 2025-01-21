@@ -1,0 +1,13 @@
+
+
+<html>
+    <h1>Crear un nuevo foro</h1>
+    <form action="index.php?c=admin&add=1" method="POST">
+        <label for="foro">Nombre del foro:</label><br>
+        <input type="text" id="foro" name="nombre" required><br>
+        <label for="publico">¿Deseas que se vea?</label><br>
+        <input type="number" id="publico" name="publico" required><br>
+        <input type="submit" value="Crear foro">
+    </form>
+    <a href="index.php?c=admin&adminView=1">Volver</a>
+</html>

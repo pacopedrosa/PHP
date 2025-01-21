@@ -1,0 +1,33 @@
+<html>
+
+    <h1>Pagina principal</h1>
+
+    <a href="index.php?c=register&registerView=1">register</a>
+    <a href="index.php?c=login&loginView=1">Login</a>
+    <a href="index.php?c=tienda&showProducts=1">Ver productos</a>
+</html>
+<?php
+
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+
+    if ($user->getRole() == 1) {
+        echo "<h3>Perteneces a la sección de administradores.</h3>";
+        echo "<a href='index.php?c=admin&adminView=1'>Panel de administradores</a>";
+    }
+}
+?>
+
+<br><br><br>
+
+<?php
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    echo "Hola " . $user->getUsername();
+    if ($user->getUsername() !== 'invitado') {
+        echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
+    }
+} else {
+    echo "Bienvenido, invitado.";
+}
+?>

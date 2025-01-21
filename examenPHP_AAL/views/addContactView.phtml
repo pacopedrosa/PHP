@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<?php
+    echo '<h1>Creación de Contacto </h1>';
+
+    
+    echo '<form action="index.php?c=contact&&addContact=1" method="post">
+            Nombre:
+            <input type="text" id="nombreContact" name="nombreContact" required>
+            <br><br>
+            Puesto:
+            <input type="text" id="puesto" name="puesto" required>
+            <br><br>
+            Telefono:
+            <input type="number" id="telf" name="telf" required>
+            <br><br>
+            Correo:
+            <input type="email" id="correoContact" name="correoContact" required>
+            <br><br>
+            Empresa:
+            <select name="empresa">
+                <option value="">-- Selecciona una Empresa --</option>';
+                
+    foreach ($empresas as $empresa) {
+        echo '<option value="' . $empresa->getId() . '">' . $empresa->getNombre() . '</option>';
+    }
+
+    echo '      </select>
+            <br><br>
+            <button type="submit">Asignar Empresa</button>
+        </form>';
+?>
+
+</body>
+</html>

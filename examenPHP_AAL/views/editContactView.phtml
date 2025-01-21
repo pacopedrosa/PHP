@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>EDITAR CONTACTO</title>
+</head>
+
+<body>
+
+
+	<?php
+    echo "<h2>Editando el contacto ".$contactSelect->getNombre()."</h2>";
+    echo '<br><br><form action="index.php?c=contact&editContact='.$contactSelect->getId().'" method="POST">
+        Seleccione el campo a editar:<br>
+        <select name="campo">
+            <option value="puesto">Puesto</option>
+            <option value="nombre">Nombre</option>
+            <option value="telefono">Teléfono</option>
+            <option value="email">Correo</option>
+        </select><br><br>
+        
+        Nuevo valor: <input type="text" name="nuevo_valor" required><br><br>
+        <input type="submit" value="Guardar">
+        </form>';
+    ?>
+
+
+	
+
+
+
+</body>
+ 
+</html>
+
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<?php
+    echo '<h2>Detalles de '.$empresaSelect->getNombre().' </h2>';
+
+    echo '<p>Nombre de la empresa: '.$empresaSelect->getNombre().'</p>';
+    echo '<p>Dirección: '.$empresaSelect->getDireccion().'</p>';
+    echo '<p>Teléfono: '.$empresaSelect->getTelefono().'</p>';
+    echo '<p>Email: '.$empresaSelect->getCorreo().'</p>';
+    echo '<p>NIF: '.$empresaSelect->getNif().'</p>';
+
+
+    echo "<h3>Contactos de la empresa:</h3>";
+
+    $contactosRel = ContactRepository::getContactByEmpresa($empresaSelect->getId());
+
+    foreach($contactosRel as $contactoRel){
+        echo '<p>Nombre: '.$contactoRel->getNombre().'</p>';
+        echo '<p>Teléfono: '.$contactoRel->getTelefono().'</p>';
+        echo '<p>Email: '.$contactoRel->getCorreoContact().'</p>';
+        echo '<p>Cargo: '.$contactoRel->getPuesto().'</p>';
+        echo "<a href='index.php?c=contact&editContactView=".$contactoRel->getId()."'>editar</a>";
+        echo '<hr>';
+    }
+ 
+
+   
+
+
+
+    
+?>
+
+</body>
+</html>

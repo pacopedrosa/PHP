@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de usuarios</title>
+</head>
+<body>
+    <h1>Gestion de usuarios</h1>
+
+    <h3>Elige la opción que quieres que se realice</h3>
+
+    <a href="index.php?c=admin&change=1">- DAR ADMIN A USUARIO</a>
+
+    <?php 
+    if (isset($users) && !empty($users)) {
+        echo '<h3>Lista de Usuarios:</h3><ul>';
+        foreach ($users as $user) {
+            echo '<li>ID: ' . $user->getId() . ', Nombre de usuario: ' . $user->getUsername() . ', Rol: ' . $user->getRole()
+             . '<a href="index.php?c=admin&changeRole=1&id='.$user->getId().'">✔</a>' 
+             . '<a href="index.php?c=admin&removeRole=1&id='.$user->getId().'">X</a>' . '</li>';
+        }
+        //Aqui hemos recogido en el GET el id para asi poder ejecutar las funciones pasandole el id como parametro
+        //porque la variable user de el recorrido no esta en el controlador
+        echo '</ul>';
+    } else {
+        echo '<h3>No hay usuarios disponibles.</h3>';
+    }
+    ?>
+
+    <a href="index.php">volver</a>
+</body>
+</html>

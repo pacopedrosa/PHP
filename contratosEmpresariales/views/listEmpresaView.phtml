@@ -1,0 +1,19 @@
+<h2>Buscador</h2>
+
+    <form method="post" action="index.php?c=contratos&search=1">
+        <input type="text" name="query" placeholder="Buscar por empresa">
+        <input type="submit" value="Buscar">
+    </form>
+<?php
+
+
+
+echo "<br><br><br><br>";
+    //Lista de empresa
+    foreach($empresas as $empresa){
+        echo "Nombre empresa:";
+        echo "<p><a href='index.php?c=contratos&seeDetails=1&id=".$empresa->getId()."'>".$empresa->getNombre()."</a></p>";
+        echo "<hr>";
+    }
+
+?>

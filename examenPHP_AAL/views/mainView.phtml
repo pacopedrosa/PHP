@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+</head>
+
+<body>
+    <h1>Examen PHP</h1>
+    <a href="index.php?c=user&logout=1">Logout</a>
+    <?php
+    if (isset($_SESSION['user'])) {
+        echo "Welcome, " . $_SESSION['user']->getUsername();
+
+        echo "<h2>¿Que deséa hacer?</h2> <a href='index.php?c=empresa&empresasView=1'>Lista de empresas</a>";
+
+        echo "<br><br> <a href='index.php?c=empresa&addEmpresaView=1'>Crear Empresa</a><br>";
+        echo "<br><br> <a href='index.php?c=contact&addContactView=1'>Crear Contacto</a><br>";
+        echo "<br><br> <a href='index.php?c=registro&addRegistroView=1'>Crear Registro</a><br>";
+
+
+        echo "<h2>Listado de registros</h2>";
+        
+        foreach ($registros as $registro){
+            $contacto=ContactRepository::getContactByRegistro($registro->getIdContact());
+            if ($registro->getCerrado() == 0){
+                echo "REGISTRO:".$registro->getId()."<br>";
+                echo "FECHA: ".$registro->getDate()."<br>";
+                echo "NOTACION: ".$registro->getNotacion()."<br>";
+                echo "NOMBRE: ".$contacto->getNombre()."<br><br>";
+                echo "<hr>";
+            }
+
+            
+            
+           
+        }
+
+        echo "<a href='index.php?c=registro&seeMoreRegistros=1'>ver todos</a><br><br>";
+
+        
+              
+    }
+
+    
+
+ 
+
+
+  
+    ?>
+</body>
+
+</html>

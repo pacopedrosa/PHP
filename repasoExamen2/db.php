@@ -3,8 +3,9 @@ class Connection
 {
     public static function connect()
     {
-        $connect = new mysqli("localhost", "root", "", "foro");
+        $connect = new mysqli("localhost", "root", "", "tiendabasica2");
         $connect->query("SET NAMES 'utf8'");
         return $connect;
-     }
+    }
 }
+// 

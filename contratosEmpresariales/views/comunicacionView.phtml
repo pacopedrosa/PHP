@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Comunicación</title>
+</head>
+<body>
+    <h1>Registrar Comunicación</h1>
+    <form action="index.php?c=user&sendCommunication=1" method="POST">
+        <!-- Fecha de la comunicación -->
+        <label for="fecha">Fecha de la comunicación:</label>
+        <input type="datetime-local" id="fecha" name="fecha" required>
+        <br><br>
+
+        <!-- Nombre del contacto -->
+        <label for="contacto">Selecciona un contacto:</label>
+        <select id="contacto" name="contacto" required>
+            <option value="" disabled selected>Selecciona un contacto</option>
+            <?php
+            $personasContacto = personaContactoRepository::getPersonas();            
+
+            // Generar las opciones del select
+            foreach ($personasContacto as $persona) {
+                echo '<option value="'. $persona->getId().'">'. $persona->getNombre(). '</option>';
+            }
+           ?>
+        </select>
+        <br><br>
+        </select>
+        <br><br>
+
+        <!-- Anotación de la llamada -->
+        <label for="anotacion">Anotación de la llamada:</label>
+        <textarea id="anotacion" name="anotacion" placeholder="Escribe aquí las notas sobre la llamada" rows="5" required></textarea>
+        <br><br>
+
+        <!-- Botón para enviar -->
+        <button type="submit">Registrar Comunicación</button>
+    </form>
+</body>
+</html>

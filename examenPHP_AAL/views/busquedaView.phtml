@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Busqueda</title>
+</head>
+
+<body>
+
+
+    <?php
+
+    if (isset($empresas) && !empty($empresas)){
+        foreach ($empresas as $empresa) {
+
+        echo "Nombre: ".$empresa->getNombre();
+
+        }
+    }
+
+    ?>
+
+	
+
+</body>
+ 
+</html>

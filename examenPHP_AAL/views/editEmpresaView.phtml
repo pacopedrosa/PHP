@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>EDITAR EMPRESA</title>
+</head>
+
+<body>
+
+
+	<?php
+    echo "<h2>Editando la empresa ".$empresaSelect->getNombre()."</h2>";
+    echo "El NIF y el Teléfono deben ser numeros";
+    echo '<br><br><form action="index.php?c=empresa&editEmpresa='.$empresaSelect->getId().'" method="POST">
+        Seleccione el campo a editar:<br>
+        <select name="campo">
+            <option value="nif">NIF</option>
+            <option value="nombre">Nombre</option>
+            <option value="direccion">Dirección</option>
+            <option value="telefono">Teléfono</option>
+            <option value="email">Correo</option>
+        </select><br><br>
+        
+        Nuevo valor: <input type="text" name="nuevo_valor" required><br><br>
+        <input type="submit" value="Guardar">
+        </form>';
+    ?>
+
+
+	
+
+
+
+</body>
+ 
+</html>
+
+
+

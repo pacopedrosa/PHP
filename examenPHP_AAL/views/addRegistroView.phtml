@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<?php
+    echo '<h1>Creación de Registro </h1>';
+
+    
+    echo '<form action="index.php?c=registro&&addRegistro=1" method="post">
+            Fecha:
+            <input type="date" id="dateRegistro" name="dateRegistro" required>
+            <br><br>
+            Anotación:
+            <input type="textarea" id="anotacion" name="anotacion" required>
+            <br><br>
+            Contacto de Empresa:
+            <select name="contact">
+                <option value="">-- Selecciona un Contacto --</option>';
+                
+    foreach ($contacts as $contact) {
+        echo '<option value="' . $contact->getId() . '">' . $contact->getNombre() . '</option>';
+        
+    }
+
+    echo '      </select>
+            <br><br>
+            <button type="submit">Cerrar</button>
+        </form>';
+?>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?php
+    foreach($registros as $registro){
+        echo "REGISTRO: ".$registro->getId()."<br>";
+        echo "FECHA: ".$registro->getFecha()."<br>";
+        echo "ANOTACIÓN: ".$registro->getAnotacion()."<br>";
+        echo "<a href='index.php?c=admin&close=1&id=".$registro->getId()."'>cerrar</a>";
+        echo "<a href='index.php?c=admin&open=1&id=".$registro->getId()."'>reabrir</a>";
+        echo "<a href='index.php?c=admin&permBan=1&id=".$registro->getId()."'>eliminar</a>";
+        echo "<hr>";
+    }
+?>

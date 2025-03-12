@@ -1,0 +1,70 @@
+
+
+<html>
+
+<h1>Pagina principal</h1>
+
+<?php
+if (!isset($_SESSION['user'])) {
+    echo '<a href="index.php?c=login&loginView=1">Login</a>' . "<br>";
+    echo '<a href="index.php?c=register&registerView=1">register</a>';
+}
+?>
+
+</html>
+
+<?php
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+
+    if ($user->getRole() == 1) {
+        echo "<h3>Perteneces a la sección de administradores.</h3>";
+        echo "<a href='index.php?c=admin&adminView=1'>Panel de administradores</a>";
+    }
+
+    if ($_SESSION['user']->getUsername() != 'invitado') {
+        echo "<br><br><br>";
+        echo "<a href='index.php?entry=1'>Realizar una entrada o salida de un objeto</a>";
+
+        if (isset($_GET['entry'])) {
+            $objetos = objetoRepository::getObjetos();
+            echo "<h3>Objetos</h3>";
+            foreach ($objetos as $objeto) {
+                echo "<p>" . $objeto->getDescripcion() . "</p>";
+                echo "<a href='index.php?c=registro&registerEntry=1&id=" . $objeto->getId() . "'>Registrar</a>";
+                echo "<a href='index.php?c=registro&exitEntry=1&id=" . $objeto->getId() . "'>Salida</a>";
+            }
+        }
+
+
+        $objectsWithLocation = ubicacionRepository::getObjectsOrderedByLocation();
+
+        echo "<br><br><br>";
+        echo "<h2>Lista de objetos</h2>";
+
+        foreach ($objectsWithLocation as $entry) {
+            $objeto = $entry['objeto'];
+            $ubicacion = $entry['ubicacion'];
+
+            // Mostrar los datos del objeto y su ubicación
+            echo "<p><strong>Descripción: </strong>" . $objeto->getDescripcion() . "</p>";
+            echo "<p><strong>Cantidad: </strong>" . $objeto->getCantidad() . "</p>";
+            echo "<p><strong>Ubicación: </strong>Pasillo: " . $ubicacion->getPasillo() . " - Estantería: " . $ubicacion->getEstanteria() . " - Estante: " . $ubicacion->getEstante() . "</p>";
+            echo "<br>";
+        }
+
+        $cantidadTotal = objetoRepository::totalObjects();
+        echo "<h3>Cantidad total de objetos: " . $cantidadTotal . "</h3>";
+    }
+
+    echo "<br><br><br>";
+    echo "Hola " . $user->getUsername();
+
+    if ($user->getUsername() !== 'invitado') {
+        echo " <a href='index.php?c=login&logout=1'>Salir</a><br><br>";
+    }
+} else {
+    echo "<br><br><br>";
+    echo "Bienvenido, invitado.";
+}
+?>

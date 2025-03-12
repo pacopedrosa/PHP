@@ -1,0 +1,21 @@
+<?php
+
+echo "<h1>Vista de retiros</h1>";
+echo "Descripción: " . $objeto->getDescripcion() . "<br>";
+echo "Cantidad Disponible: " . $objeto->getCantidad() . "<br>";
+
+echo "<form action='index.php?c=registro&retire=1&id=" . $objeto->getId() . "' method='POST'>
+        <div>
+            <label for='amount'>Cantidad a Retirar:</label>
+            <input type='number' id='amount' name='amount' placeholder='cantidad' min='1' max='" . $objeto->getCantidad() . "' required>
+        </div>
+        <div>
+            <label for='fecha_salida'>Fecha de Salida:</label>
+            <input type='date' id='fecha_salida' name='fecha_salida' required>
+        </div>
+        <div>
+            <input type='submit' name='retire' value='Retirar'>
+        </div>
+    </form>";
+
+?>

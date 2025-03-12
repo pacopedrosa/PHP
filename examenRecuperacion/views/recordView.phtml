@@ -1,0 +1,23 @@
+<?php
+
+echo "<h1>Vista de registros</h1>";
+echo "Descripción: " . $objeto->getDescripcion() . "<br>";
+echo "Cantidad: " . $objeto->getCantidad() . "<br>";
+
+
+
+echo "<form action='index.php?c=registro&update=1&id=" . $objeto->getId() . "' method='POST'>
+        <div>
+            <label for='amount'>Cantidad:</label>
+            <input type='number' id='amount' name='amount' placeholder='cantidad' min='1' required>
+        </div>
+        <div>
+            <label for='fecha_entrada'>Fecha de Entrada:</label>
+            <input type='date' id='fecha_entrada' name='fecha_entrada' required>
+        </div>
+        <div>
+            <input type='submit' name='update' value='Registrar'>
+        </div>
+    </form>";
+
+?>

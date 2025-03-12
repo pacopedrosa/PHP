@@ -1,0 +1,18 @@
+<h1>Panel de jefes</h1> 
+
+<a href="index.php?c=admin&addObject=1">Dar de alta un objeto</a>
+<a href="index.php?c=admin&list=1&listObject=1">Modificar un objeto</a>
+<?php
+
+    if(isset($_GET['list'])){
+       $objetos = objetoRepository::getObjetos();
+       echo "<h2>Objetos</h2>";
+       foreach($objetos as $objeto){
+            echo "<p>".$objeto->getDescripcion()."</p>";
+            echo "<a href='index.php?c=admin&editView=1&id=".$objeto->getId()."'>Modificar</a>";
+       }
+    }
+
+?>
+<br><br><br><br><br>
+<a href="index.php">Volver</a>
